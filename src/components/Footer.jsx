@@ -6,7 +6,6 @@ import igIcon from "../assets/social/instagram.png";
 import liIcon from "../assets/social/linkedin.png";
 import ghIcon from "../assets/social/github.png";
 import tkIcon from "../assets/social/tiktok.png";
-import rdIcon from "../assets/social/reddit.png";
 import upIcon from "../assets/social/upwork.png";
 import ntIcon from "../assets/social/icon.png";
 import ytIcon from "../assets/social/youtube.png";

@@ -1,10 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 
 export default function Navbar() {
   const sliderRef = useRef(null);
   const linkRefs = useRef([]);
 
-  const sectionIds = ["top", "about", "services", "skills", "projects", "contact"];
+  // ✅ FIX: sectionIds ko useMemo me wrap kiya
+  const sectionIds = useMemo(
+    () => ["top", "about", "services", "skills", "projects", "contact"],
+    []
+  );
+
   const [activeIndex, setActiveIndex] = useState(null);
 
   function moveSliderTo(index) {
@@ -43,7 +48,7 @@ export default function Navbar() {
     return () => {
       sections.forEach((sec) => observer.unobserve(sec));
     };
-  }, [sectionIds]);
+  }, [sectionIds]); // ✅ ab eslint happy
 
   useEffect(() => {
     if (activeIndex !== null) {
