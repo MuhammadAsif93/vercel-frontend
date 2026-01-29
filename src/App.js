@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react"; // React + useEffect import
 import "./App.css";
 
+// Components import karo
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -12,6 +13,18 @@ import Footer from "./components/Footer";
 import FloatingWhatsApp from "./components/FloatingWhatsApp";
 
 function App() {
+
+  // Backend API call
+  useEffect(() => {
+    fetch("/api/hello")
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.message); // Browser console me message
+        alert(data.message);       // Alert box me message
+      })
+      .catch(err => console.error(err));
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -27,4 +40,5 @@ function App() {
   );
 }
 
+// Default export
 export default App;
