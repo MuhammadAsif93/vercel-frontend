@@ -311,8 +311,7 @@ body {
   flex: 1 1 350px;
   display: flex;
   justify-content: center;
-   margin-left: 300px;
-  
+  margin-left: 300px;
   align-items: center;
   position: relative;
   min-width: 0;
@@ -344,9 +343,16 @@ body {
 
 /* Mobile specific adjustments */
 @media (max-width: 768px) {
+  .hero-image {
+    margin-left: 0;        /* Mobile pe left margin remove */
+    justify-content: center;
+  }
+
   .hero-photo {
-    max-width: 90%;     /* Mobile pe almost full width */
-    height: auto;       /* Maintain aspect ratio */
+    max-width: 90%;        /* Mobile pe almost full width */
+    width: 400px;          /* Minimum width set for small screens */
+    max-width: 500px;      /* Maximum width for larger mobiles */
+    height: auto;          /* Aspect ratio maintain rahe */
     border-radius: 20px;
   }
 }
