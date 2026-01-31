@@ -3,12 +3,9 @@ import React, { useState } from "react";
 /**
  * API base URL:
  * - Local backend -> http://localhost:4000
- * - Vercel live backend -> https://vercel-backand-production.up.railway.app
+ * - Vercel live backend -> set via REACT_APP_API_BASE environment variable
  */
-const API_BASE =
-  process.env.REACT_APP_API_BASE ||
-  (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_API_BASE) ||
-  "http://localhost:4000"; // default local backend
+const API_BASE = process.env.REACT_APP_API_BASE; // strictly env variable
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -40,7 +37,6 @@ export default function Contact() {
     try {
       setSending(true);
 
-      // fetch request to backend
       const res = await fetch(`${API_BASE}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -54,7 +50,6 @@ export default function Contact() {
         throw new Error(data?.error || "Failed to send message.");
       }
 
-      // success -> clear form & show thanks
       setSubmitted(true);
       setName("");
       setEmail("");
@@ -72,7 +67,6 @@ export default function Contact() {
         <h2 className="contact-heading-glow">Contact Me</h2>
 
         <div className="contact-flex-row">
-          {/* LEFT SIDE: info */}
           <div className="contact-info-block">
             <h3 className="contact-subtitle">Get in Touch</h3>
             <p className="contact-paragraph">
@@ -99,7 +93,6 @@ export default function Contact() {
             </p>
           </div>
 
-          {/* RIGHT SIDE: form */}
           <div className="contact-form-block">
             {submitted ? (
               <div className="contact-thanks-card">
@@ -118,7 +111,6 @@ export default function Contact() {
               </div>
             ) : (
               <form className="contact-form-theme" onSubmit={handleSubmit} noValidate>
-                {/* Name */}
                 <div className="form-field">
                   <label className="form-label" htmlFor="name">Name:</label>
                   <input
@@ -132,7 +124,6 @@ export default function Contact() {
                   {errors.name && <div className="form-error-text">{errors.name}</div>}
                 </div>
 
-                {/* Email */}
                 <div className="form-field">
                   <label className="form-label" htmlFor="email">Email:</label>
                   <input
@@ -146,7 +137,6 @@ export default function Contact() {
                   {errors.email && <div className="form-error-text">{errors.email}</div>}
                 </div>
 
-                {/* Message */}
                 <div className="form-field">
                   <label className="form-label" htmlFor="message">Your Message</label>
                   <textarea
@@ -160,7 +150,6 @@ export default function Contact() {
                   {errors.message && <div className="form-error-text">{errors.message}</div>}
                 </div>
 
-                {/* Server error */}
                 {serverError && (
                   <div className="form-error-text" style={{ marginTop: 8 }}>
                     {serverError}
