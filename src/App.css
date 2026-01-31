@@ -321,9 +321,9 @@ body {
 }
 
 .hero-photo {
-  width: 100%;
-  max-width: 300px; /* Increased size for desktop */
-  height: 350px;
+  width: 100%;           /* Container ke width ke hisaab se */
+  max-width: 300px;      /* Desktop max size */
+  height: auto;          /* Aspect ratio maintain rahe */
   border-radius: 30px;
   position: relative;
   z-index: 2;
@@ -336,10 +336,21 @@ body {
   transition: all 0.5s ease-in-out;
 }
 
+/* Desktop hover effect */
 .hero-photo:hover {
   transform: scale(1.05);
   box-shadow: 0 0 100px rgba(255, 92, 77, 0.5);
 }
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+  .hero-photo {
+    max-width: 90%;     /* Mobile pe almost full width */
+    height: auto;       /* Maintain aspect ratio */
+    border-radius: 20px;
+  }
+}
+
 
 .glow-ring {
   position: absolute;
