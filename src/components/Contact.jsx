@@ -2,28 +2,24 @@ import React, { useState } from "react";
 
 /**
  * API base URL:
- * - CRA -> REACT_APP_API_BASE (Vercel: set this to your backend URL)
- * - Vite -> VITE_API_BASE (if you ever switch to Vite)
- * - Fallback -> localhost for dev
+ * - Local backend -> http://localhost:4000
+ * - Vercel live backend -> https://vercel-backand-production.up.railway.app
  */
 const API_BASE =
   process.env.REACT_APP_API_BASE ||
   (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_API_BASE) ||
-  "http://localhost:4000";
+  "http://localhost:4000"; // default local backend
 
 export default function Contact() {
-  // form state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  // validation + submit state
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [serverError, setServerError] = useState("");
 
-  // simple validation
   function validate() {
     const newErrors = {};
     if (!name.trim()) newErrors.name = "Please enter your name.";
@@ -34,7 +30,6 @@ export default function Contact() {
     return newErrors;
   }
 
-  // submit -> call backend
   async function handleSubmit(e) {
     e.preventDefault();
     setServerError("");
@@ -45,13 +40,13 @@ export default function Contact() {
     try {
       setSending(true);
 
+      // fetch request to backend
       const res = await fetch(`${API_BASE}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
       });
 
-      // try to parse JSON even on error so we can show server message
       let data = {};
       try { data = await res.json(); } catch {}
 
@@ -80,35 +75,27 @@ export default function Contact() {
           {/* LEFT SIDE: info */}
           <div className="contact-info-block">
             <h3 className="contact-subtitle">Get in Touch</h3>
-
             <p className="contact-paragraph">
               If you have any questions, project proposals, or simply want to connect,
               please don’t hesitate to reach out. I’m eager to discuss opportunities
               and collaborate.
             </p>
-
             <p className="contact-line">
               <span className="contact-icon">📞</span>
               <span className="contact-strong">Phone:</span>{" "}
               <span className="contact-value">+92 346 0649953</span>
             </p>
-
             <p className="contact-line">
               <span className="contact-icon">✉️</span>
               <span className="contact-strong">Email:</span>{" "}
               <a
                 className="contact-email-link"
-                href="https://mail.google.com/mail/?view=cm&fs=1&to=saif666.edu@gmail.com&su=Project%20Inquiry&body=Hello%20Saif,%0A%0AI'd%20like%20to%20discuss%20a%20project%20with%20you.%0A%0AThanks!"
+                href="mailto:asifahmad5261836@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 asifahmad5261836@gmail.com
               </a>
-            </p>
-
-            <p className="contact-paragraph">
-              I am actively seeking freelance projects, partnerships, and new
-              challenges. Let’s work together to create something exceptional.
             </p>
           </div>
 
@@ -141,7 +128,6 @@ export default function Contact() {
                     placeholder="Enter Your Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    autoComplete="name"
                   />
                   {errors.name && <div className="form-error-text">{errors.name}</div>}
                 </div>
@@ -156,7 +142,6 @@ export default function Contact() {
                     placeholder="Enter Your Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    autoComplete="email"
                   />
                   {errors.email && <div className="form-error-text">{errors.email}</div>}
                 </div>
@@ -182,7 +167,6 @@ export default function Contact() {
                   </div>
                 )}
 
-                {/* Submit */}
                 <button
                   type="submit"
                   className={`submit-btn-theme ${sending ? "opacity-70 cursor-not-allowed" : ""}`}
@@ -191,8 +175,6 @@ export default function Contact() {
                 >
                   {sending ? "Sending…" : "Submit"}
                 </button>
-
-                
               </form>
             )}
           </div>
