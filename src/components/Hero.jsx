@@ -1,6 +1,6 @@
 import React from "react";
 import profileCircle from "../assets/Asif2.png";
-import resumePdf from "../assets/muhammadasif-cv.pdf";
+import resumePdf from "../assets/Muhammad_Asif_resume.pdf";
 
 export default function Hero() {
   return (
