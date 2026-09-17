@@ -307,6 +307,9 @@ body {
 }
 
 /* ---------- RIGHT SIDE IMAGE ---------- */
+/* ================================
+   HERO IMAGE
+================================ */
 .hero-image {
   flex: 1 1 350px;
   display: flex;
@@ -319,76 +322,165 @@ body {
   box-sizing: border-box;
 }
 
+/* ================================
+   MAIN PROFILE IMAGE
+================================ */
 .hero-photo {
-  width: 100%;           /* Container ke width ke hisaab se */
-  max-width: 300px;      /* Desktop max size */
-  height: auto;          /* Aspect ratio maintain rahe */
-  border-radius: 30px;
+  width: 420px;
+  height: 420px;
+
+  border-radius: 50%;
+
   position: relative;
-  z-index: 2;
-  box-shadow: 0 0 80px rgba(255, 92, 77, 0.4),
-              0 0 120px rgba(255, 92, 77, 0.25);
-  filter: brightness(1.05) contrast(1.05);
+  z-index: 3;
+
   object-fit: cover;
-  mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 80%, transparent 100%);
-  -webkit-mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 80%, transparent 100%);
-  transition: all 0.5s ease-in-out;
+
+  /* Image ko circular crop */
+  clip-path: circle(50% at 50% 50%);
+
+  /* Transparent/background feel */
+  background: transparent;
+
+  box-shadow:
+    0 0 45px rgba(255, 92, 77, 0.35),
+    0 0 90px rgba(255, 92, 77, 0.18);
+
+  filter: brightness(1.05) contrast(1.05);
+
+  transition: transform 0.5s ease-in-out,
+              box-shadow 0.5s ease-in-out;
 }
 
-/* Desktop hover effect */
+/* ================================
+   IMAGE HOVER
+================================ */
 .hero-photo:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 100px rgba(255, 92, 77, 0.5);
+
+  box-shadow:
+    0 0 60px rgba(255, 92, 77, 0.5),
+    0 0 120px rgba(255, 92, 77, 0.25);
 }
 
-/* Mobile specific adjustments */
+
+/* ================================
+   DARK + RED ANIMATED CIRCLES
+================================ */
+.glow-ring {
+  position: absolute;
+
+  width: 450px;
+  height: 450px;
+
+  border-radius: 50%;
+
+  background: transparent;
+
+  border: 2px solid rgba(255, 92, 77, 0.75);
+
+  z-index: 1;
+
+  animation: heroRingRotate 8s linear infinite;
+
+  box-shadow:
+    0 0 20px rgba(255, 92, 77, 0.25),
+    inset 0 0 20px rgba(255, 92, 77, 0.15);
+}
+
+
+/* Second dark circle */
+.glow-ring::before {
+  content: "";
+
+  position: absolute;
+
+  width: 410px;
+  height: 410px;
+
+  top: 18px;
+  left: 18px;
+
+  border-radius: 50%;
+
+  border: 4px solid rgba(15, 22, 28, 0.95);
+
+  box-shadow:
+    0 0 25px rgba(15, 22, 28, 0.8);
+
+  animation: heroDarkRing 5s ease-in-out infinite alternate;
+}
+
+
+/* ================================
+   RING ANIMATIONS
+================================ */
+@keyframes heroRingRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes heroDarkRing {
+  from {
+    transform: scale(0.96);
+    opacity: 0.75;
+  }
+
+  to {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 992px) {
+  .hero-photo {
+    width: 360px;
+    height: 360px;
+  }
+
+  .glow-ring {
+    width: 390px;
+    height: 390px;
+  }
+
+  .glow-ring::before {
+    width: 350px;
+    height: 350px;
+  }
+}
+
+
+/* ================================
+   MOBILE
+================================ */
 @media (max-width: 768px) {
   .hero-image {
-    margin-left: 0;        /* Mobile pe left margin remove */
+    margin-left: 0;
     justify-content: center;
   }
 
   .hero-photo {
-    max-width: 90%;        /* Mobile pe almost full width */
-    width: 400px;          /* Minimum width set for small screens */
-    max-width: 500px;      /* Maximum width for larger mobiles */
-    height: auto;          /* Aspect ratio maintain rahe */
-    border-radius: 20px;
-  }
-}
-
-
-.glow-ring {
-  position: absolute;
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at center,
-    rgba(255, 92, 77, 0.35) 0%,
-    rgba(15, 22, 28, 0.15) 50%,
-    transparent 80%
-  );
-  filter: blur(45px);
-  z-index: 1;
-  transition: all 0.4s ease;
-}
-
-/* ---------- RESPONSIVE ---------- */
-@media (max-width: 992px) {
-  .hero-photo {
-    max-width: 320px;
-  }
-  .glow-ring {
     width: 320px;
     height: 320px;
   }
-}
 
-@media (max-width: 768px) {
-  .hero-container {
-    flex-direction: column-reverse;
-    text-align: center;
+  .glow-ring {
+    width: 345px;
+    height: 345px;
+  }
+
+  .glow-ring::before {
+    width: 305px;
+    height: 305px;
   }
 
   .hero-text {
@@ -425,24 +517,6 @@ body {
   .glow-ring {
     width: 250px;
     height: 250px;
-  }
-}
-/* 🔥 ROLE TEXT ANIMATION */
-.role-animate {
-  display: inline-block;
-  animation: roleFadeSlide 1s ease forwards;
-}
-
-@keyframes roleFadeSlide {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-    filter: blur(6px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
   }
 }
 

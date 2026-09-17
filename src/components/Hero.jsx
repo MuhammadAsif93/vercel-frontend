@@ -1,23 +1,8 @@
-import React, { useEffect, useState } from "react";
-import profileCircle from "../assets/Asif.jpg";
+import React from "react";
+import profileCircle from "../assets/Asif2.png";
 import resumePdf from "../assets/muhammadasif-cv.pdf";
 
 export default function Hero() {
-  const [roleIndex, setRoleIndex] = useState(0);
-
-  const roles = [
-    "Full Stack Developer",
-    "Data Scientist",
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev === 0 ? 1 : 0));
-    }, 3000); // ⏱ 3 sec delay
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section id="top" className="hero-section">
       <div className="hero-container">
@@ -32,21 +17,26 @@ export default function Hero() {
           <h3 className="hero-im">
             <span className="hero-line"></span>
             <span className="hover-word">I’m</span>{" "}
-            <span className="hero-name highlight-name">Muhammad Asif</span>
+            <span className="hero-name highlight-name">
+              Muhammad Asif
+            </span>
           </h3>
 
-          {/* 🔥 ROLE ANIMATION */}
+          {/* ROLE */}
           <h1 className="hero-role">
-            <span key={roleIndex} className="role-animate">
-              {roles[roleIndex]}
-            </span>
+            Full Stack Developer
           </h1>
 
           <div className="hero-buttons">
             <a className="hero-btn primary" href="#contact">
               Hire Me
             </a>
-            <a className="hero-btn secondary" href={resumePdf} download>
+
+            <a
+              className="hero-btn secondary"
+              href={resumePdf}
+              download
+            >
               My Resume
             </a>
           </div>
@@ -55,8 +45,14 @@ export default function Hero() {
         {/* RIGHT IMAGE */}
         <div className="hero-image">
           <div className="glow-ring"></div>
-          <img src={profileCircle} alt="Muhammad Asif" className="hero-photo" />
+
+          <img
+            src={profileCircle}
+            alt="Muhammad Asif"
+            className="hero-photo"
+          />
         </div>
+
       </div>
     </section>
   );

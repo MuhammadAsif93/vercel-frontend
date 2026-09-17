@@ -16,7 +16,7 @@ function App() {
 
   // Backend API call
   useEffect(() => {
-    fetch("https://vercel-backand.vercel.app/")
+    fetch("https://vercel-backand-production-e954.up.railway.app/")
       .then(res => res.json())
       .then(data => {
         console.log(data.message); // Browser console me message

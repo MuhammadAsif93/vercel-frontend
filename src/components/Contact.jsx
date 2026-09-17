@@ -88,7 +88,7 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                asifahmad5261836@gmail.com
+                masif.dev3@gmail.com
               </a>
             </p>
           </div>

@@ -13,7 +13,10 @@ import dataScienceLogo from "../assets/skills/datascience.png";
 import bootstrapLogo from "../assets/skills/bootstrap.png";
 import tailwindLogo from "../assets/skills/tailwand-css.png"; // spelling fix
 import figmaLogo from "../assets/skills/figma.png";
-
+import nodejsLogo from "../assets/skills/nodejs.png";
+import uiLogo from "../assets/skills/ui.png";
+import gitLogo from "../assets/skills/git.png";
+import reactnLogo from "../assets/skills/reactn.png";
 export default function Skills() {
   const skillList = [
     { icon: htmlLogo, label: "HTML" },
@@ -28,6 +31,11 @@ export default function Skills() {
     { icon: bootstrapLogo, label: "Bootstrap" },
     { icon: tailwindLogo, label: "Tailwind CSS" },
     { icon: figmaLogo, label: "Figma" }, // Added Figma
+    { icon: nodejsLogo, label: "Nodejs" },
+     { icon: uiLogo, label: "Ui\Ux" },
+      { icon: gitLogo, label: "Git" },
+       { icon: reactnLogo, label: "ReactNative" },
+
   ];
 
   return (

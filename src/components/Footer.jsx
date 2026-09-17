@@ -82,7 +82,7 @@ export default function Footer() {
 
         {/* COPYRIGHT LINE */}
         <div className="footer-copy">
-          © 2025 Muhammad Asif . All rights reserved.
+          © 2026 Muhammad Asif . All rights reserved.
         </div>
       </div>
     </footer>
