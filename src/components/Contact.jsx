@@ -1,172 +1,286 @@
-import React, { useState } from "react";
 
-/**
- * API base URL:
- * - Local backend -> http://localhost:4000
- * - Vercel live backend -> set via REACT_APP_API_BASE environment variable
- */
-const API_BASE = process.env.REACT_APP_API_BASE; // strictly env variable
+import React, { useState } from "react";
 
 export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [serverError, setServerError] = useState("");
 
   function validate() {
     const newErrors = {};
-    if (!name.trim()) newErrors.name = "Please enter your name.";
-    if (!email.trim()) newErrors.email = "Please enter your email.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+
+    if (!name.trim()) {
+      newErrors.name = "Please enter your name.";
+    }
+
+    if (!email.trim()) {
+      newErrors.email = "Please enter your email.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       newErrors.email = "Please enter a valid email.";
-    if (!message.trim()) newErrors.message = "Please enter your message.";
+    }
+
+    if (!message.trim()) {
+      newErrors.message = "Please enter your message.";
+    }
+
     return newErrors;
   }
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    setServerError("");
+
     const foundErrors = validate();
     setErrors(foundErrors);
-    if (Object.keys(foundErrors).length) return;
 
-    try {
-      setSending(true);
-
-      const res = await fetch(`${API_BASE}/api/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
-      });
-
-      let data = {};
-      try { data = await res.json(); } catch {}
-
-      if (!res.ok) {
-        throw new Error(data?.error || "Failed to send message.");
-      }
-
-      setSubmitted(true);
-      setName("");
-      setEmail("");
-      setMessage("");
-    } catch (err) {
-      setServerError(err?.message || "Something went wrong.");
-    } finally {
-      setSending(false);
+    if (Object.keys(foundErrors).length > 0) {
+      return;
     }
+
+    // Your email address
+    const receiverEmail = "masif.dev3@gmail.com";
+
+    // Email subject
+    const subject = `New Contact Message from ${name}`;
+
+    // Email body
+    const emailBody = `Hello Muhammad Asif,
+
+You have received a new message from your portfolio website.
+
+Name: ${name}
+Email: ${email}
+
+Message:
+${message}
+
+--------------------------------
+Sent from Muhammad Asif Portfolio
+`;
+
+    // Create mailto URL
+    const mailtoURL = `mailto:${receiverEmail}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(emailBody)}`;
+
+    // Open email client in the same tab/window
+    window.location.href = mailtoURL;
+
+    // Show success message on the portfolio
+    setSubmitted(true);
+
+    // Clear form
+    setName("");
+    setEmail("");
+    setMessage("");
   }
 
   return (
     <section id="contact" className="contact-wrapper-theme">
       <div className="contact-inner-theme">
-        <h2 className="contact-heading-glow">Contact Me</h2>
+
+        <h2 className="contact-heading-glow">
+          Contact Me
+        </h2>
 
         <div className="contact-flex-row">
+
+          {/* Contact Information */}
           <div className="contact-info-block">
-            <h3 className="contact-subtitle">Get in Touch</h3>
+
+            <h3 className="contact-subtitle">
+              Get in Touch
+            </h3>
+
             <p className="contact-paragraph">
-              If you have any questions, project proposals, or simply want to connect,
-              please don’t hesitate to reach out. I’m eager to discuss opportunities
-              and collaborate.
+              If you have any questions, project proposals, or simply want
+              to connect, please don’t hesitate to reach out. I’m eager to
+              discuss opportunities and collaborate.
             </p>
+
             <p className="contact-line">
               <span className="contact-icon">📞</span>
               <span className="contact-strong">Phone:</span>{" "}
-              <span className="contact-value">+92 346 0649953</span>
+              <span className="contact-value">
+                +92 346 0649953
+              </span>
             </p>
+
             <p className="contact-line">
               <span className="contact-icon">✉️</span>
               <span className="contact-strong">Email:</span>{" "}
+
               <a
                 className="contact-email-link"
-                href="mailto:asifahmad5261836@gmail.com"
+                href="mailto:masif.dev3@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 masif.dev3@gmail.com
               </a>
             </p>
+
           </div>
 
+          {/* Contact Form */}
           <div className="contact-form-block">
+
             {submitted ? (
+
               <div className="contact-thanks-card">
+
                 <div className="thanks-glow-ring" />
-                <h3 className="thanks-title">Thank you!</h3>
+
+                <h3 className="thanks-title">
+                  Thank you!
+                </h3>
+
                 <p className="thanks-text">
-                  Your message has been received. I’ll get back to you soon.
+                  Your email message has been prepared.
+                  Please press Send in your email app.
                 </p>
+
                 <button
                   className="submit-btn-theme"
-                  onClick={() => setSubmitted(false)}
+                  onClick={() => {
+                    setSubmitted(false);
+                    setErrors({});
+                  }}
                   style={{ marginTop: 12 }}
                 >
                   Send another message
                 </button>
+
               </div>
+
             ) : (
-              <form className="contact-form-theme" onSubmit={handleSubmit} noValidate>
+
+              <form
+                className="contact-form-theme"
+                onSubmit={handleSubmit}
+                noValidate
+              >
+
+                {/* Name */}
                 <div className="form-field">
-                  <label className="form-label" htmlFor="name">Name:</label>
+
+                  <label
+                    className="form-label"
+                    htmlFor="name"
+                  >
+                    Name:
+                  </label>
+
                   <input
                     id="name"
-                    className={`form-input ${errors.name ? "form-input-error" : ""}`}
+                    className={`form-input ${
+                      errors.name ? "form-input-error" : ""
+                    }`}
                     type="text"
                     placeholder="Enter Your Name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                      setErrors((prev) => ({
+                        ...prev,
+                        name: "",
+                      }));
+                    }}
                   />
-                  {errors.name && <div className="form-error-text">{errors.name}</div>}
+
+                  {errors.name && (
+                    <div className="form-error-text">
+                      {errors.name}
+                    </div>
+                  )}
+
                 </div>
 
+                {/* Email */}
                 <div className="form-field">
-                  <label className="form-label" htmlFor="email">Email:</label>
+
+                  <label
+                    className="form-label"
+                    htmlFor="email"
+                  >
+                    Email:
+                  </label>
+
                   <input
                     id="email"
-                    className={`form-input ${errors.email ? "form-input-error" : ""}`}
+                    className={`form-input ${
+                      errors.email ? "form-input-error" : ""
+                    }`}
                     type="email"
                     placeholder="Enter Your Email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setErrors((prev) => ({
+                        ...prev,
+                        email: "",
+                      }));
+                    }}
                   />
-                  {errors.email && <div className="form-error-text">{errors.email}</div>}
+
+                  {errors.email && (
+                    <div className="form-error-text">
+                      {errors.email}
+                    </div>
+                  )}
+
                 </div>
 
+                {/* Message */}
                 <div className="form-field">
-                  <label className="form-label" htmlFor="message">Your Message</label>
+
+                  <label
+                    className="form-label"
+                    htmlFor="message"
+                  >
+                    Your Message
+                  </label>
+
                   <textarea
                     id="message"
-                    className={`form-textarea ${errors.message ? "form-input-error" : ""}`}
+                    className={`form-textarea ${
+                      errors.message ? "form-input-error" : ""
+                    }`}
                     placeholder="Your Message"
                     rows="4"
                     value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                    onChange={(e) => {
+                      setMessage(e.target.value);
+                      setErrors((prev) => ({
+                        ...prev,
+                        message: "",
+                      }));
+                    }}
                   />
-                  {errors.message && <div className="form-error-text">{errors.message}</div>}
+
+                  {errors.message && (
+                    <div className="form-error-text">
+                      {errors.message}
+                    </div>
+                  )}
+
                 </div>
 
-                {serverError && (
-                  <div className="form-error-text" style={{ marginTop: 8 }}>
-                    {serverError}
-                  </div>
-                )}
-
+                {/* Submit */}
                 <button
                   type="submit"
-                  className={`submit-btn-theme ${sending ? "opacity-70 cursor-not-allowed" : ""}`}
-                  disabled={sending}
-                  aria-busy={sending ? "true" : "false"}
+                  className="submit-btn-theme"
                 >
-                  {sending ? "Sending…" : "Submit"}
+                  Submit
                 </button>
+
               </form>
+
             )}
+
           </div>
+
         </div>
       </div>
     </section>
