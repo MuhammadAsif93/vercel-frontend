@@ -36,7 +36,7 @@ export default function Footer() {
     {
       name: "TikTok",
       icon: tkIcon,
-      url: "https://www.tiktok.com/@stdprojects0?_r=1&_t=ZS-93QTzLQaUSo",
+      url: "https://www.tiktok.com/@webdevhouse?_r=1&_t=ZS-99rLsHcFXNg",
     },
      {
     name: "YouTube",
